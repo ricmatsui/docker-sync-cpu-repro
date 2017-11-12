@@ -3,5 +3,6 @@ version: '2'
 syncs:
   reprocpu_sync:
     src: '.'
+    image: eugenmayer/unison:hostsync_0.2
     sync_strategy: native_osx
     sync_prefer: src
