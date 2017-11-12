@@ -8,10 +8,11 @@ docker-sync stop
 docker-sync clean
 rm -rf *.unison.tmp test.js
 docker-sync start
-
+LIMIT=${1:-100000000}
+FACTOR=${2:-10}
 LINE_COUNT=1000
 
-while [ $(( LINE_COUNT < 100000000 )) -eq 1 ]; do
+while [ $(( LINE_COUNT < $LIMIT )) -eq 1 ]; do
     echo "Attempting to repro with line count $LINE_COUNT"
     TEST_COUNT=15
     echo "  Creating and deleting file $TEST_COUNT times with line count $LINE_COUNT and sleep 1 second"
@@ -50,7 +51,7 @@ while [ $(( LINE_COUNT < 100000000 )) -eq 1 ]; do
 
     echo "  No repro with $LINE_COUNT"
 
-    LINE_COUNT=$(( LINE_COUNT * 10 ))
+    LINE_COUNT=$(( LINE_COUNT * FACTOR ))
 done
 
 echo "REPRO FAILURE"
